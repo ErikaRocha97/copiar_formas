@@ -4,6 +4,7 @@ from pptx import Presentation
 from copy import deepcopy
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
+from io import BytesIO
 
 try:
     # Selecionar arquivos
@@ -56,11 +57,10 @@ try:
 
                 imagem = shape.image
 
-                with open("temp_img.png", "wb") as f:
-                    f.write(imagem.blob)
+                imagem_bytes = BytesIO(imagem.blob)
 
                 slide_novo.shapes.add_picture(
-                    "temp_img.png",
+                    imagem_bytes,
                     shape.left,
                     shape.top,
                     shape.width,
