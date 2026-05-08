@@ -33,7 +33,7 @@ try:
 
         for shape in slide_origem.shapes:
 
-            # Placeholders
+            # copia placeholders
             if shape.is_placeholder:
 
                 novo_elemento = deepcopy(shape.element)
@@ -51,7 +51,23 @@ try:
                 shape_nova.width = shape.width
                 shape_nova.height = shape.height
 
-            # Outras shapes
+            # copia imagens
+            elif shape.shape_type == 13:
+
+                imagem = shape.image
+
+                with open("temp_img.png", "wb") as f:
+                    f.write(imagem.blob)
+
+                slide_novo.shapes.add_picture(
+                    "temp_img.png",
+                    shape.left,
+                    shape.top,
+                    shape.width,
+                    shape.height
+                )
+
+            # copia outras shapes
             else:
 
                 novo_elemento = deepcopy(shape.element)
